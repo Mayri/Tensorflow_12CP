@@ -14,6 +14,7 @@ import os
 os.system('mode con: cols=100 lines=40')
 from sys import exit
 os.system('reset')
+os.system('clear')
 os.environ['TF_CPP_MIN_LOG_LEVEL']='3'
 
 
