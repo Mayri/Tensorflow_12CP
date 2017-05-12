@@ -136,7 +136,7 @@ biases = {
     'encoder_pre_b2': tf.Variable(tf.random_normal([pre_n_hidden_2])),
     'encoder_pre_b3': tf.Variable(tf.random_normal([pre_n_hidden_3])),
     'encoder_pre_b4': tf.Variable(tf.random_normal([pre_n_hidden_4])),
-	  'decoder_pre_b1': tf.Variable(tf.random_normal([pre_n_hidden_3])),
+    'decoder_pre_b1': tf.Variable(tf.random_normal([pre_n_hidden_3])),
     'decoder_pre_b2': tf.Variable(tf.random_normal([pre_n_hidden_2])),
     'decoder_pre_b3': tf.Variable(tf.random_normal([pre_n_hidden_1])),
     'decoder_pre_b4': tf.Variable(tf.random_normal([pre_n_input])),
