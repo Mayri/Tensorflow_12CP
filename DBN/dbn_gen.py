@@ -351,6 +351,37 @@ class NN(object):
             accuracy = accuracy_score(test_set_for_CM,predicted_labels)
             print("Accuracy of the model is :",accuracy)
 
+            #creating confusion matrix for 5 classes 
+            confusion_class5 = confusion_matrix(test_set_for_CM, predicted_labels)
+            print("\nconfusion matrix for 5 classes\n",confusion_class5)
+            #creating confusion matrix for 2 classes 
+            confusion_class2 = confusion_matrix(class2_for_test_data, predicted_labels)
+            print("confusion matrix for 2 classes\n",confusion_class2)
+            #creating confusion matrix for 3 classes 
+            confusion_class3 = confusion_matrix(class3_for_test_data, predicted_labels)
+            print("confusion matrix for 3 classes\n",confusion_class3)
+            #creating confusion matrix for 4 classes 
+            confusion_class4 = confusion_matrix(class4_for_test_data, predicted_labels)
+            print("confusion matrix for 4 classes\n",confusion_class4)
+            #Classification Report for class 5
+            classification_class_5 = classification_report(test_set_for_CM,predicted_labels, digits=4, target_names =['Normal','DoS','Probe','U2R','R2I'])
+            print("The classification report for all the 5 classes "+"\n")
+            print ("\t",classification_class_5)
+            #Classification Report for class 2
+            classification_class_2 = classification_report(class2_for_test_data,predicted_labels, digits=4, target_names =['Normal','Attack'])
+            print("The classification report for the 2 classes "+"\n")
+            print ("\t",classification_class_2)
+            #Classification Report for class 3
+            classification_class_3 = classification_report(class3_for_test_data,predicted_labels, digits=4, 
+            	target_names =['Normal','DoS','OtherAttack'])
+            print("The classification report for all the 3 classes "+"\n")
+            print ("\t",classification_class_3)
+            #Classification Report for class 4
+            classification_class_4 = classification_report(class4_for_test_data,predicted_labels, digits=4, 
+            	target_names =['Normal','DoS','Probe','OtherAttack'])
+            print("The classification report for all the 4 classes "+"\n")
+            print ("\t",classification_class_4)
+
 nNet = NN(RBM_hidden_sizes, train_set, train_labels_set)
 nNet.load_from_rbms(RBM_hidden_sizes,rbm_list)
 nNet.train()
