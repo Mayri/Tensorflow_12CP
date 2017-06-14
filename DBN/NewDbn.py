@@ -25,7 +25,7 @@ class RBM(object):
         #Defining the hyperparameters
         self._input_size = input_size #Size of input
         self._output_size = output_size #Size of output
-        self.epochs = 10 #Amount of training iterations
+        self.epochs = 1 #Amount of training iterations
         self.learning_rate = 0.1 #The step used in gradient descent
         self.batchsize = 10 #The size of how much data will be used for training per sub iteration
         
@@ -209,8 +209,8 @@ class NN(object):
         self.b_list = []
         self._learning_rate =  0.1
         #self._momentum = 0.0
-        self._epoches = 5
-        self._batchsize = 10
+        self._epoches = 1
+        self._batchsize = 1
         input_size = X.shape[1]
         
         #initialization loop
@@ -289,18 +289,11 @@ class NN(object):
                     self.w_list[j] = sess.run(_w[j])
                     self.b_list[j] = sess.run(_b[j])
                 
-                print ("Accuracy rating for epoch " + str(i) + ": " + str(np.mean(np.argmax(self._Y, axis=1) ==
-                              sess.run(predict_op, feed_dict={_a[0]: self._X, y: self._Y})))
+                print ("Accuracy rating for epoch " + str(i) + ": " + str(np.mean(np.argmax(self._Y, axis=1) == 
+                              sess.run(predict_op, feed_dict={_a[0]: self._X, y: self._Y}))))
             #Predicted lables on the test data
-            predicted_labels = sess.run(predict_op, feed_dict ={_a[0]:test_set, y:test_labels_set})
-
-            #Calculating the means accuracy of the model on the test data 
-            accuracy_mode = accuracy_score(test_set_for_CM, predicted_labels)
-            accuracy = operator.mul(accuracy_mode,100)
-            print("Accuracy of the models is: ", accuracy,"%")
-            #warnings.filterwarnings("ignore", category=UndefinedMetricWarning)
             #creating confusion matrix for 5 classes 
-            confusion_class5 = confusion_matrix(test_set_for_CM, predicted_labels)
+            confusion_class5 = confusion_matrix(test_set_for_CM, pred)
             print("confusion matrix for 5 classes\n",confusion_class5)
             #creating confusion matrix for 2 classes 
             confusion_class2 = confusion_matrix(class2, predicted_labels)
