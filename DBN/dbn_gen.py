@@ -1,55 +1,22 @@
-#!/usr/bin/env python3.5
-# -*- coding: utf-8 -*-
-
-Import the math function for calculations
+#Import the math function for calculations
 import math
 #Tensorflow library. Used to implement machine learning models
 import tensorflow as tf
 #Numpy contains helpful functions for efficient mathematical calculations
 import numpy as np
-#Pandas contains functions needed to read csv files
 import pandas as pd
-#Sklearn library has some good evaluation functions 
-from sklearn.metrics import accuracy_score
-from sklearn.metrics import confusion_matrix
+from sklearn.metrics import confusion_matrix, accuracy_score
 from sklearn.metrics import classification_report
-#Operator contains basic math functions 
-import operator
-#Os contains Operating systemms calls which we use here to hide some unwanted messages from Tensorflow
-import os
-#Timeit contains function to calculate time
-import timeit
 
-#Please don`t change
-os.system('mode con: cols=100 lines=40')
-os.system('reset')
-os.environ['TF_CPP_MIN_LOG_LEVEL']='3' 
-
-
-##################################################################################################################################################
-print("\t\t**********************************************************")
-print("\t\t*                                                        *")
-print("\t\t*                  The Deep Belief Network Program       *")
-print("\t\t*   - A Program by Jay Vala, Akash Antony, Kartik Sareen *")
-print("\t\t*                                                        *")
-print("\t\t**********************************************************\n")
-
-print("\t\tSelect the appropriate options and you will be good to go!\n")
-##################################################################################################################################################
-
-#Timer function to calculate the time taken to run the program
-start = timeit.default_timer()
-
-#Class that defines the behavior of the RBM
 class RBM(object):
     
     def __init__(self, input_size, output_size):
         #Defining the hyperparameters
         self._input_size = input_size #Size of input
         self._output_size = output_size #Size of output
-        self.epochs = rbm_epoch #Amount of training iterations
-        self.learning_rate = lr_rate_rbm #The step used in gradient descent
-        self.batchsize = rbm_epoch #The size of how much data will be used for training per sub iteration
+        self.epochs = 5 #Amount of training iterations
+        self.learning_rate = 1.1 #The step used in gradient descent
+        self.batchsize = 100 #The size of how much data will be used for training per sub iteration
         
         #Initializing weights and biases as matrices full of zeroes
         self.w = np.zeros([input_size, output_size], np.float32) #Creates and initializes the weights with 0
@@ -59,35 +26,12 @@ class RBM(object):
 
     #Fits the result from the weighted visible layer plus the bias into a sigmoid curve
     def prob_h_given_v(self, visible, w, hb):
-        if activation == 1:
-            return tf.nn.relu(tf.matmul(visible, w) + hb)
-        elif activation == 2:
-            return tf.nn.sigmoid(tf.matmul(visible, w) + hb)
-        elif activation == 3:
-            return tf.nn.elu(tf.matmul(visible, w) + hb)
-        elif activation == 4:
-            return tf.nn.softplus(tf.matmul(visible, w) + hb)
-        elif activation == 5:
-            return tf.nn.softmax(tf.matmul(visible, w) + hb)
-        else:
-            print("Wrong option, exiting...")
-            exit(0)
+        #Sigmoid 
+        return tf.nn.sigmoid(tf.matmul(visible, w) + hb)
 
     #Fits the result from the weighted hidden layer plus the bias into a sigmoid curve
     def prob_v_given_h(self, hidden, w, vb):
-        if activation == 1:
-            return tf.nn.relu(tf.matmul(hidden, tf.transpose(w)) + vb)
-        elif activation == 2:
-            return tf.nn.sigmoid(tf.matmul(hidden, tf.transpose(w)) + vb)
-        elif activation == 3:
-            return tf.nn.elu(tf.matmul(hidden, tf.transpose(w)) + vb)
-        elif activation == 4:
-            return tf.nn.softplus(tf.matmul(hidden, tf.transpose(w)) + vb)
-        elif activation == 5:
-            return tf.nn.softmax(tf.matmul(hidden, tf.transpose(w)) + vb)
-        else:
-            print("Wrong option, exiting...")
-            exit(0)
+        return tf.nn.sigmoid(tf.matmul(hidden, tf.transpose(w)) + vb)
     
     #Generate the sample probability
     def sample_prob(self, probs):
@@ -131,6 +75,7 @@ class RBM(object):
         with tf.Session() as sess:
             sess.run(tf.global_variables_initializer())
             #For each epoch
+            
             for epoch in range(self.epochs):
                 #For each step/batch
                 for start, end in zip(range(0, len(X), self.batchsize),range(self.batchsize,len(X), self.batchsize)):
@@ -158,8 +103,7 @@ class RBM(object):
             sess.run(tf.global_variables_initializer())
             return sess.run(out)
 
-
-#Loading the Dataset
+#Load Dataset
 df = pd.read_csv('/home/jay/Documents/Project/incomplete_project/DBNKDD/dataset/NSL-KDD_Processed/Kdd_Test_41.csv')             # test set 
 er = pd.read_csv('/home/jay/Documents/Project/incomplete_project/DBNKDD/dataset/NSL-KDD_Processed/NSL_TestLabels_mat5.csv')     # test labels
 ad = pd.read_csv('/home/jay/Documents/Project/incomplete_project/DBNKDD/dataset/NSL-KDD_Processed/Kdd_Train_41.csv')            # train set 
@@ -169,27 +113,14 @@ yu = pd.read_csv('/home/jay/Documents/Project/incomplete_project/DBNKDD/dataset/
 rt = pd.read_csv('/home/jay/Documents/Project/incomplete_project/DBNKDD/dataset/NSL-KDD_Processed/NSL_TrainLabels_int.csv')
 t = pd.read_csv('/home/jay/Documents/Project/incomplete_project/DBNKDD/dataset/NSL-KDD_Processed/NSL_TestLabels_int.csv')
 
-# Reading classes files for confusion matrics and classification reports
-class2_for_test_data = pd.read_csv('/home/jay/Documents/Project/Classes_of_dataset/classes_for_KDD_test_data/class2.csv')
-class3_for_test_data = pd.read_csv('/home/jay/Documents/Project/Classes_of_dataset/classes_for_KDD_test_data/class3.csv')
-class4_for_test_data = pd.read_csv('/home/jay/Documents/Project/Classes_of_dataset/classes_for_KDD_test_data/class4.csv')
-
-#taking the values from files
 a = df.values
 b = ad.values
 c = qw.values
 d = er.values
 e = tr.values
 f = yu.values
+g = rt.values
 h = t.values
-
-
-#Taking the values from csv files for classes datafiles
-i = class2_for_test_data.values
-j = class3_for_test_data.values
-k = class4_for_test_data.values
-
-#converting the values from files and converting them into numpy float types for our model
 test_set = np.float32(a)
 train_set = np.float32(b)
 train_labels_set = np.float32(c)
@@ -197,38 +128,12 @@ valid_labels_set = np.float32(f)
 valid_set = np.float32(e)
 test_labels_set = np.float32(d)
 test_set_for_CM =np.float32(h)
+train_set_for_CM = np.float32(g)
 
-#Converting the class values into numpy float values
-class2 = np.float32(i)
-class3 = np.float32(j)
-class4 = np.float32(k)
-
-# Declaring the variabels and asking for user input (We have increased the number of layers for more accuracy)
-print("Note : The best configration we found for this model was 300 -> 200 -> 100 -> 50 -> 30 -> 20 -> 10 -> 5. However you can use your own configrations as well.\n\n")
-pre_n_hidden_1 = int(input("Please input the Pretraing network's Hidden layer 1'st Neurons : ")) # 1st layer num features
-pre_n_hidden_2 = int(input("Please input the Pretraing network's Hidden layer 2'nd Neurons : ")) # 2nd layer num features 
-pre_n_hidden_3 = int(input("Please input the Pretraing network's Hidden layer 3'rd Neurons : ")) # 3rd layer num features
-pre_n_hidden_4 = int(input("Please input the Pretraing network's Hidden layer 4'th Neurons : ")) # 4th layer num features
-pre_n_hidden_5 = int(input("Please input the Pretraing network's Hidden layer 5'th Neurons : ")) # 5th layer num features
-pre_n_hidden_6 = int(input("Please input the Pretraing network's Hidden layer 6'th Neurons : ")) # 6th layer num features 
-pre_n_hidden_7 = int(input("Please input the Pretraing network's Hidden layer 7'th Neurons : ")) # 7th layer num features
-pre_n_hidden_8 = int(input("Please input the Pretraing network's Hidden layer 8'th Neurons : ")) # 8th layer num features
-
-
-lr_rate_rbm = float(input("\nPlease input the learing rate for training RBM's(should be between 0 and 1) :"))
-rbm_epoch = int(input("Please input the number of epochs for training RBM's(more >> better) : "))
-rbm_batch =  int(input("Please input the batch size for training the RBM's(lower >> better) :"))
-print("\nActivation Functions for the layers\n")
-print("1 for relu\n2 for sigmoid\n3 for elu\n4 for softplus\n5 for softmax\n")
-activation = int(input("Please enter the activation function for the encoder layers : "))
-print("\n")
-
-
-
-RBM_hidden_sizes = [pre_n_hidden_1, pre_n_hidden_2 ,pre_n_hidden_3, pre_n_hidden_4, pre_n_hidden_5, pre_n_hidden_6,pre_n_hidden_7, pre_n_hidden_8] #create layers of the RBM's 
+RBM_hidden_sizes = [ 300, 200, 100 , 50, 25, 5 ] #create 2 layers of RBM with size 400 and 100
 
 #Since we are training, set input as training data
-inpX = train_set
+inpX = valid_set
 
 #Create list to hold our RBMs
 rbm_list = []
@@ -236,24 +141,23 @@ rbm_list = []
 #Size of inputs is the number of inputs in the training set
 input_size = inpX.shape[1]
 
+print("...building model")
 #For each RBM we want to generate
 for i, size in enumerate(RBM_hidden_sizes):
-    print ('RBM stack: ',i,' ',input_size,'->', size)
+    print ('RBM Stack: ',i,' ',input_size,'->', size)
     rbm_list.append(RBM(input_size, size))
     input_size = size
 
+
 #For each RBM in our list
+print("...Pretraing Model")
 for rbm in rbm_list:
-    print ('New RBM stack:')
+    print ('training new RBM stack:')
     #Train a new one
     rbm.train(inpX) 
     #Return the output layer
     inpX = rbm.rbm_outpt(inpX)
 
-#Neural Network Parameter
-lr_rate_nn = float(input("\nPlease input the learing rate for training Neural Networks's(should be between 0 and 1): "))
-nn_epoch = int(input("Please input the number of epochs for training Neural Networks's(more >> better): "))
-nn_batch =  int(input("Please input the batch size for training the Neural Networks's(lower >> better): "))
 
 
 class NN(object):
@@ -265,11 +169,12 @@ class NN(object):
         self._Y = Y
         self.w_list = []
         self.b_list = []
-        self._learning_rate =  lr_rate_nn
-        self._momentum = 0.0
-        self._epoches = nn_epoch
-        self._batchsize = nn_batch
+        self._learning_rate =  1.1
+        self._momentum = 0.1
+        self._epoches = 11
+        self._batchsize = 10
         input_size = X.shape[1]
+        
         
         #initialization loop
         for size in self._sizes + [Y.shape[1]]:
@@ -304,8 +209,9 @@ class NN(object):
         _a = [None] * (len(self._sizes) + 2)
         _w = [None] * (len(self._sizes) + 1)
         _b = [None] * (len(self._sizes) + 1)
-        _a[0] = tf.placeholder("float", [None, self._X.shape[1]])
-        y = tf.placeholder("float", [None, self._Y.shape[1]])
+        _a[0] = tf.placeholder("float32", [None, self._X.shape[1]])
+        y = tf.placeholder("float32", [None, self._Y.shape[1]])
+        
         
         #Define variables and activation functoin
         for i in range(len(self._sizes) + 1):
@@ -315,8 +221,8 @@ class NN(object):
             _a[i] = tf.nn.sigmoid(tf.matmul(_a[i - 1], _w[i - 1]) + _b[i - 1])
         
         #Define the cost function
-        cost = tf.reduce_mean(tf.square(_a[-1] - y))
-        
+        cost = tf.reduce_mean(tf.pow(_a[-1] - y, 2))
+ 
         #Define the training operation (Momentum Optimizer minimizing the Cost function)
         train_op = tf.train.MomentumOptimizer(
             self._learning_rate, self._momentum).minimize(cost)
@@ -328,7 +234,8 @@ class NN(object):
         with tf.Session() as sess:
             #Initialize Variables
             sess.run(tf.global_variables_initializer())
-            
+            print("...building Neural Network")
+            print("...visualizing result")
             #For each epoch
             for i in range(self._epoches):
                 
@@ -345,43 +252,20 @@ class NN(object):
                     self.w_list[j] = sess.run(_w[j])
                     self.b_list[j] = sess.run(_b[j])
                 
-                print ("Accuracy rating for epoch " + str(i) + ": " + str(np.mean(np.argmax(self._Y, axis=1) ==
-                              sess.run(predict_op, feed_dict={_a[0]: self._X, y: self._Y}))))
-            predicted_labels = sess.run(predict_op,feed_dict={_a[0]:test_set,y:test_labels_set})
-            accuracy = accuracy_score(test_set_for_CM,predicted_labels)
-            print("Accuracy of the model is :",accuracy)
+                print ("Accuracy while training on test data for epoch " + str(i) + ": " + str(np.mean(np.argmax(self._Y, axis=1) ==
+                              sess.run(predict_op, feed_dict={_a[0]: self._X}))))
 
-            #creating confusion matrix for 5 classes 
-            confusion_class5 = confusion_matrix(test_set_for_CM, predicted_labels)
-            print("\nconfusion matrix for 5 classes\n",confusion_class5)
-            #creating confusion matrix for 2 classes 
-            confusion_class2 = confusion_matrix(class2_for_test_data, predicted_labels)
-            print("confusion matrix for 2 classes\n",confusion_class2)
-            #creating confusion matrix for 3 classes 
-            confusion_class3 = confusion_matrix(class3_for_test_data, predicted_labels)
-            print("confusion matrix for 3 classes\n",confusion_class3)
-            #creating confusion matrix for 4 classes 
-            confusion_class4 = confusion_matrix(class4_for_test_data, predicted_labels)
-            print("confusion matrix for 4 classes\n",confusion_class4)
-            #Classification Report for class 5
-            classification_class_5 = classification_report(test_set_for_CM,predicted_labels, digits=4, target_names =['Normal','DoS','Probe','U2R','R2I'])
-            print("The classification report for all the 5 classes "+"\n")
-            print ("\t",classification_class_5)
-            #Classification Report for class 2
-            classification_class_2 = classification_report(class2_for_test_data,predicted_labels, digits=4, target_names =['Normal','Attack'])
-            print("The classification report for the 2 classes "+"\n")
-            print ("\t",classification_class_2)
-            #Classification Report for class 3
-            classification_class_3 = classification_report(class3_for_test_data,predicted_labels, digits=4, 
-            	target_names =['Normal','DoS','OtherAttack'])
-            print("The classification report for all the 3 classes "+"\n")
-            print ("\t",classification_class_3)
-            #Classification Report for class 4
-            classification_class_4 = classification_report(class4_for_test_data,predicted_labels, digits=4, 
-            	target_names =['Normal','DoS','Probe','OtherAttack'])
-            print("The classification report for all the 4 classes "+"\n")
-            print ("\t",classification_class_4)
 
-nNet = NN(RBM_hidden_sizes, train_set, train_labels_set)
+
+            predict = sess.run(predict_op, feed_dict={_a[0]: train_set,y:train_labels_set})             
+
+        accuracy = accuracy_score(train_set_for_CM,predict)
+        print(accuracy)  
+    
+        classification = classification_report(train_set_for_CM,predict, target_names=['Normal','DoS', 'Probe', 'U2R', 'I2R'], digits=4)
+        print(classification)
+        confusion = confusion_matrix(train_set_for_CM, predict)
+        print(confusion)
+nNet = NN(RBM_hidden_sizes, test_set, test_labels_set)
 nNet.load_from_rbms(RBM_hidden_sizes,rbm_list)
 nNet.train()
