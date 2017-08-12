@@ -124,8 +124,6 @@ with tf.Session() as sess:
         if epoch % display_step == 0:
             print("Epoch:", '%04d' % (epoch+1),
                   "cost=", "{:.9f}".format(c))
-    #saving weights and biases for fine tuning
-    print("Saving weight and biases for fine tune of layer 1")
     
 
 encoder_layer_1 = tf.nn.sigmoid(tf.add(tf.matmul(X, weights['encoder_pre_h1']),
@@ -155,8 +153,7 @@ with tf.Session() as sess:
         if epoch % display_step == 0:
             print("Epoch:", '%04d' % (epoch+1),
                   "cost=", "{:.9f}".format(c))
-    #saving weights and biases for fine tuning
-    print("Saving weight and biases for fine tune of layer 2")
+
     
 
 encoder_layer_1 = tf.nn.sigmoid(tf.add(tf.matmul(X, weights['encoder_pre_h1']),
@@ -189,8 +186,7 @@ with tf.Session() as sess:
         if epoch % display_step == 0:
             print("Epoch:", '%04d' % (epoch+1),
                   "cost=", "{:.9f}".format(c))
-    #saving weights and biases for fine tuning
-    print("Saving weight and biases for fine tune of layer 3")
+
     
 
 encoder_layer_1 = tf.nn.sigmoid(tf.add(tf.matmul(X, weights['encoder_pre_h1']),
