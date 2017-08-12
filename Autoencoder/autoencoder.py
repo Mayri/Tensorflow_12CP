@@ -126,8 +126,7 @@ with tf.Session() as sess:
                   "cost=", "{:.9f}".format(c))
     #saving weights and biases for fine tuning
     print("Saving weight and biases for fine tune of layer 1")
-    post_weights['encoder_pre_h1'] = weights['encoder_pre_h1']
-    post_biases['encoder_pre_b1'] = biases['encoder_pre_b1']
+    
 
 encoder_layer_1 = tf.nn.sigmoid(tf.add(tf.matmul(X, weights['encoder_pre_h1']),
                                    biases['encoder_pre_b1']))
@@ -158,8 +157,7 @@ with tf.Session() as sess:
                   "cost=", "{:.9f}".format(c))
     #saving weights and biases for fine tuning
     print("Saving weight and biases for fine tune of layer 2")
-    post_weights['encoder_pre_h2'] = weights['encoder_pre_h2']
-    post_biases['encoder_pre_b2'] =biases['encoder_pre_b2']
+    
 
 encoder_layer_1 = tf.nn.sigmoid(tf.add(tf.matmul(X, weights['encoder_pre_h1']),
                                    biases['encoder_pre_b1']))
@@ -193,9 +191,7 @@ with tf.Session() as sess:
                   "cost=", "{:.9f}".format(c))
     #saving weights and biases for fine tuning
     print("Saving weight and biases for fine tune of layer 3")
-    post_weights['encoder_pre_h3'] = weights['encoder_pre_h3']
-    post_biases['encoder_pre_b3'] =biases['encoder_pre_b3']
-
+    
 
 encoder_layer_1 = tf.nn.sigmoid(tf.add(tf.matmul(X, weights['encoder_pre_h1']),
                                    biases['encoder_pre_b1']))
@@ -232,6 +228,12 @@ with tf.Session() as sess:
                   "cost=", "{:.9f}".format(c))
     #saving weights and biases for fine tuning
     print("Saving weight and biases for fine tune of layer 4")
+    post_weights['encoder_pre_h1'] = weights['encoder_pre_h1']
+    post_biases['encoder_pre_b1'] = biases['encoder_pre_b1']
+    post_weights['encoder_pre_h2'] = weights['encoder_pre_h2']
+    post_biases['encoder_pre_b2'] =biases['encoder_pre_b2']
+    post_weights['encoder_pre_h3'] = weights['encoder_pre_h3']
+    post_biases['encoder_pre_b3'] =biases['encoder_pre_b3']
     post_weights['encoder_pre_h4'] = weights['encoder_pre_h4']
     post_biases['encoder_pre_b4'] =biases['encoder_pre_b4']
 
